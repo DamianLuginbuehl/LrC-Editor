@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRC Editor</title>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/ws-communication.js"></script>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+
+<body>
+
+
+    <!-- <div id="loadingwindow" data-bound-element="#content" data-bound-padding="3" data-is-draggable="false"
+        class="popup-window retroborder" style="width: 600px; height: 200px; display: none;">
+        <div class="windowbar" id="loadingwindow-toolbar">
+            <p class="windowtitle">Loading Gallery...</p>
+        </div>
+
+        <div class="popup-content">
+            <div class="progress-bar" data-progress-count="20" data-progress-current="0">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        initProgressBar('#loadingwindow')
+
+    </script> -->
+
+    <div class="windowbar" style="top: 100px;">
+        <p class="windowtitle" id="mainwindowtitle">Gallery Setup Wizard</p>
+        <div id="dragbar-main"></div>
+        <div class="windowbuttons">
+            <button id="close">⨯</button>
+            <script>
+
+                document.getElementById("close").addEventListener("click", () => {
+                    window.electronAPI.closeGallerySetup();
+                });</script>
+        </div>
+    </div>
+
+    <div id="window-content">
+
+    </div>
+
+</body>
+
+
+</html>

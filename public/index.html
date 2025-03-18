@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LRC Editor</title>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/ws-communication.js"></script>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body onload="init()">
+
+    <div id="custom-cursor" data-cursor="default"></div>
+
+    <div id="loadingwindow" data-bound-element="#content" data-bound-padding="3" data-is-draggable="false"
+        class="popup-window retroborder" style="width: 600px; height: 200px; display: none;">
+        <div class="windowbar" id="loadingwindow-toolbar">
+            <p class="windowtitle">Loading Gallery...</p>
+        </div>
+
+        <div class="popup-content">
+            <div class="progress-bar" data-progress-count="20" data-progress-current="0">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        initProgressBar('#loadingwindow')
+
+    </script>
+
+    <div class="windowbar" style="top: 100px;">
+        <p class="windowtitle" id="mainwindowtitle">LrC Editor</p>
+        <div id="dragbar-main"></div>
+        <div class="windowbuttons">
+            <button id="minimize">_</button>
+            <button id="maximize">□</button>
+            <button id="close">⨯</button>
+            <script>
+                document.getElementById("minimize").addEventListener("click", () => {
+                    window.electronAPI.minimizeMain();
+                });
+
+                document.getElementById("maximize").addEventListener("click", () => {
+                    window.electronAPI.maximizeMain();
+                });
+
+                document.getElementById("close").addEventListener("click", () => {
+                    window.electronAPI.closeMain();
+                });</script>
+        </div>
+    </div>
+
+    <div id="window-content">
+        <div id="sidebar">
+            <div id="gallery-list">
+                <button class="gallery-button" data-gallery-name="" onclick="selectGallery('name')"
+                    onmouseenter="setCursor('pointer')" onmouseleave="setCursor()">
+                    <p class="gallery-name"></p>
+                    <p class="gallery-date"></p>
+                </button>
+            </div>
+        </div>
+        <div id="content" class="retroborder-inverted">
+
+            <div id="galleryinfo">
+                <div class="stats">
+                    <div class="galleryname">MA Shooting</div>
+                    <div class="gallerydate">Created on 2025.01.06</div>
+                    <div class="barchart">
+                        <div class="barnumbers">
+                            <p>1000 Photos</p>
+                            <p>25 Exported</p>
+                        </div>
+                        <div class="barcontainer">
+                            <div class="number-of-raws chart-bar">
+                                <div class="chart-bar-bar bar-blue" style="width: 100%;"></div>
+                            </div>
+                            <div class="number-of-exports chart-bar">
+                                <div class="chart-bar-bar bar-green" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="filesize">Total 100gb</div>
+                </div>
+                <div class="actions">
+                    <button>Folder Structure</button>
+                    <button>Import Photos</button>
+                    <button>Create Backup</button>
+                    <button>Photo List</button>
+                    <button>Archive</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+
+<script>
+
+
+    function moveWindowsInbound() {
+        let elmnt = document.querySelectorAll('.popup-window')
+        for (let i = 0; i < elmnt.length; i++) {
+            let parent = elmnt[i].getAttribute("data-bound-element") || 'body'
+            let parentElement = document.querySelector(parent);
+            let dataBoundPadding = Number(elmnt[i].getAttribute("data-bound-padding")) || 0
+            if (elmnt[i].offsetLeft + elmnt[i].offsetWidth > parentElement.offsetLeft + parentElement.offsetWidth - dataBoundPadding) {
+                elmnt[i].style.left = parentElement.offsetLeft + parentElement.offsetWidth - elmnt[i].offsetWidth - dataBoundPadding + 'px';
+            }
+            if (elmnt[i].offsetTop + elmnt[i].offsetHeight > parentElement.offsetTop + parentElement.offsetHeight - dataBoundPadding) {
+                elmnt[i].style.top = parentElement.offsetTop + parentElement.offsetHeight - elmnt[i].offsetHeight - dataBoundPadding + 'px';
+            }
+
+
+            if (elmnt[i].offsetLeft < parentElement.offsetLeft + dataBoundPadding) {
+                elmnt[i].style.left = parentElement.offsetLeft + dataBoundPadding + 'px';
+            }
+            if (elmnt[i].offsetTop < parentElement.offsetTop + dataBoundPadding) {
+                elmnt[i].style.top = parentElement.offsetTop + dataBoundPadding + 'px';
+            }
+        }
+    }
+
+    function initPopupWindows() {
+        let elmnt = document.querySelectorAll('.popup-window')
+        for (let i = 0; i < elmnt.length; i++) {
+            if (elmnt[i].getAttribute('data-is-draggable') == 'true') {
+                dragElement(elmnt[i]);
+            }
+            moveWindowsInbound();
+
+        }
+
+    }
+
+    initPopupWindows()
+
+
+
+
+
+
+
+
+
+</script>
+
+<script>window.electronAPI.openGallerySetup();</script>
+
+</html>
