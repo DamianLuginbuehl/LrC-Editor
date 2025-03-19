@@ -36,7 +36,7 @@ app.whenReady().then(() => {
             gallerySetupWindow = new BrowserWindow({
                 width: 600,
                 height: 400,
-                parent: mainWindow, // Make it a child of the main window
+                // parent: mainWindow, // Make it a child of the main window
                 modal: false, // Keeps it on top of the main window
                 resizable: false, // Prevents resizing
                 minimizable: false, // Can't be minimized
